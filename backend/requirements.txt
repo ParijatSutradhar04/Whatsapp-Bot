@@ -1,2 +1,5 @@
 google-generativeai
 Flask==2.3.3
+gunicorn==22.0.0
+flask-cors==3.0.10
+python-dotenv==1.0.0
