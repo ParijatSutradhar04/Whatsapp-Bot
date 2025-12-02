@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>WhatsApp Chatbot (Dark)</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <div class="phone">
+    <header class="topbar">
+      <button class="back">←</button>
+      <div class="avatar">TJ</div>
+      <div class="title-block">
+        <div class="title">Tuhina Jha IIT Kgp</div>
+        <div class="subtitle">online</div>
+      </div>
+      <div class="actions">
+        <button class="icon">📹</button>
+        <button class="icon">📞</button>
+        <button class="icon">⋮</button>
+      </div>
+    </header>
+
+    <main id="chat" class="chat" role="log" aria-live="polite"></main>
+
+    <div class="composer">
+      <button class="c-icon">😊</button>
+      <input id="messageInput" type="text" placeholder="Message" autocomplete="off" />
+      <div class="right-controls">
+        <button class="c-icon attach">📎</button>
+        <button id="sendBtn" class="send">➤</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
