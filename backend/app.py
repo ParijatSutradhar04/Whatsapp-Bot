@@ -1,9 +1,9 @@
-import google.generativeai as genai
 import os
 import time
 from flask import Flask, send_from_directory, request, jsonify
 from dotenv import load_dotenv
-from flask_cors import CORS   # <-- ADD THIS
+from flask_cors import CORS 
+from langchain_agent import get_agent_response
 
 load_dotenv()
 GEMINI_KEY = os.environ.get("GEMINI_API_KEY", "")
@@ -41,11 +41,10 @@ def add_no_cache_headers(response):
 
 
 def generate_reply(prompt: str) -> str:
-    """Generate a reply using Gemini API"""
+    """Generate a reply using LangChain agent with memory"""
     try:
-        model = genai.GenerativeModel("gemini-2.5-flash")
-        response = model.generate_content(prompt)
-        return response.text
+        response = get_agent_response(prompt)
+        return response
     except Exception as e:
         return f"Sorry, I encountered an error: {str(e)}"
 
