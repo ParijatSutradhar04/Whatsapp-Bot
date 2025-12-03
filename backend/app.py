@@ -3,11 +3,16 @@ import os
 import time
 from flask import Flask, send_from_directory, request, jsonify
 from dotenv import load_dotenv
+from flask_cors import CORS   # <-- ADD THIS
 
 load_dotenv()
 GEMINI_KEY = os.environ.get("GEMINI_API_KEY", "")
 
 app = Flask(__name__, static_folder="static", static_url_path="/static")
+
+# Allow CORS for all origins during development and GitHub Pages testing
+# Later you can restrict origins if needed.
+CORS(app, resources={r"/api/*": {"origins": "*"}})   # <-- ADD THIS
 
 @app.route("/")
 def index():
@@ -20,12 +25,9 @@ def chat():
     if not user_message:
         return jsonify({"error": "empty message"}), 400
 
-    # Quick reply echo while we call Gemini — this makes the UI feel snappy.
-    # Replace generate_reply() with your working Gemini API function.
     try:
         bot_reply = generate_reply(user_message)
     except Exception as e:
-        # Fallback reply for debugging
         bot_reply = f"Sorry, an error occurred: {str(e)}"
 
     return jsonify({"reply": bot_reply})
@@ -47,6 +49,8 @@ def generate_reply(prompt: str) -> str:
     except Exception as e:
         return f"Sorry, I encountered an error: {str(e)}"
 
+
 if __name__ == "__main__":
-    # run in debug for development, use proper server for production
-    app.run(host="0.0.0.0", port=8501, debug=True)
+    # Render expects the PORT env var
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
